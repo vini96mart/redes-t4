@@ -51,6 +51,14 @@ class Enlace:
         # TODO: Preencha aqui com o código para enviar o datagrama pela linha
         # serial, fazendo corretamente a delimitação de quadros e o escape de
         # sequências especiais, de acordo com o protocolo CamadaEnlace (RFC 1055).
+
+        # Passo 2: Adicionando os bytes em 0xDB
+        datagrama = datagrama.replace(b'\xdb', b'\xdb\xdd')
+
+	    # Passo 1: Adicionando os bytes em 0xC0
+        datagrama = datagrama.replace(b'\xc0', b'\xdb\xdc')
+        # Enviando o byte em 0xC0 pra linha serial
+        self.linha_serial.enviar(b'\xc0' + datagrama + b'\xc0')
         pass
 
     def __raw_recv(self, dados):

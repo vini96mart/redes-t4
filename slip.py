@@ -72,21 +72,21 @@ class Enlace:
         # pedaço de outro, ou vários quadros de uma vez só.
 
         # Passo 3: Tratando mensagens incompletas ou múltiplas
-        dados = self.dados_residuais + dados
-        self.dados_residuais = b''
-        if not dados.endswith(b'\xc0'):
-            dados = dados.split(b'\xc0')
-            dados = list(filter((b'').__ne__, dados))
-            self.dados_residuais += dados.pop(-1)
-        else:
-            dados = dados.split(b'\xc0')
-            dados = list(filter((b'').__ne__, dados))
+            dados = self.dados_residuais + dados
+            self.dados_residuais = b''
+            if not dados.endswith(b'\xc0'):
+                dados = dados.split(b'\xc0')
+                dados = list(filter((b'').__ne__, dados))
+                self.dados_residuais += dados.pop(-1)
+            else:
+                dados = dados.split(b'\xc0')
+                dados = list(filter((b'').__ne__, dados))
 		
-        for datagrama in dados:
+            for datagrama in dados:
 		
-        # Tratar caracteres de ambos 0xC0 e 0xDB
-            datagrama = datagrama.replace(b'\xdb\xdc', b'\xc0')
-            datagrama = datagrama.replace(b'\xdb\xdd', b'\xdb') # (Passo 4)
+            # Tratar caracteres de ambos 0xC0 e 0xDB
+                datagrama = datagrama.replace(b'\xdb\xdc', b'\xc0')
+                datagrama = datagrama.replace(b'\xdb\xdd', b'\xdb') # (Passo 4)
 	
-            self.callback(datagrama)
+                self.callback(datagrama)
         pass

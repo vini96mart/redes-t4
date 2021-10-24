@@ -62,7 +62,7 @@ class Enlace:
         self.linha_serial.enviar(b'\xc0' + datagrama + b'\xc0')
         pass
 
-     def __raw_recv(self, dados):
+    def __raw_recv(self, dados):
         # TODO: Preencha aqui com o código para receber dados da linha serial.
         # Trate corretamente as sequências de escape. Quando ler um quadro
         # completo, repasse o datagrama contido nesse quadro para a camada

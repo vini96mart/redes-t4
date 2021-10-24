@@ -62,7 +62,7 @@ class Enlace:
         self.linha_serial.enviar(b'\xc0' + datagrama + b'\xc0')
         pass
 
-        def __raw_recv(self, dados):
+     def __raw_recv(self, dados):
         # TODO: Preencha aqui com o código para receber dados da linha serial.
         # Trate corretamente as sequências de escape. Quando ler um quadro
         # completo, repasse o datagrama contido nesse quadro para a camada
@@ -72,21 +72,21 @@ class Enlace:
         # pedaço de outro, ou vários quadros de uma vez só.
 
         # Passo 3: Tratando mensagens incompletas ou múltiplas
-            dados = self.dados_residuais + dados
-            self.dados_residuais = b''
-            if not dados.endswith(b'\xc0'):
-                dados = dados.split(b'\xc0')
-                dados = list(filter((b'').__ne__, dados))
-                self.dados_residuais += dados.pop(-1)
-            else:
-                dados = dados.split(b'\xc0')
-                dados = list(filter((b'').__ne__, dados))
+        dados = self.dados_residuais + dados
+        self.dados_residuais = b''
+        if not dados.endswith(b'\xc0'):
+            dados = dados.split(b'\xc0')
+            dados = list(filter((b'').__ne__, dados))
+            self.dados_residuais += dados.pop(-1)
+        else:
+            dados = dados.split(b'\xc0')
+            dados = list(filter((b'').__ne__, dados))
 		
-            for datagrama in dados:
+        for datagrama in dados:
 		
-            # Tratar caracteres de ambos 0xC0 e 0xDB
-                datagrama = datagrama.replace(b'\xdb\xdc', b'\xc0')
-                datagrama = datagrama.replace(b'\xdb\xdd', b'\xdb') # (Passo 4)
+        # Tratar caracteres de ambos 0xC0 e 0xDB
+            datagrama = datagrama.replace(b'\xdb\xdc', b'\xc0')
+            datagrama = datagrama.replace(b'\xdb\xdd', b'\xdb') # (Passo 4)
 	
-                self.callback(datagrama)
-        pass
+            self.callback(datagrama)
+    pass

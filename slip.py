@@ -88,5 +88,10 @@ class Enlace:
             datagrama = datagrama.replace(b'\xdb\xdc', b'\xc0')
             datagrama = datagrama.replace(b'\xdb\xdd', b'\xdb') # (Passo 4)
 	
-            self.callback(datagrama)
+	# Passo 5: Tratar um datagrama mal formado
+            try:
+                self.callback(datagrama)
+            except:
+                import traceback
+                traceback.print_exc()
     pass
